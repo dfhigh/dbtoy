@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.mib.db.model.Project;
-import org.mib.rest.model.ListElementRequest;
+import org.mib.rest.model.list.ListElementRequest;
 
 import java.util.Collection;
 import java.util.List;

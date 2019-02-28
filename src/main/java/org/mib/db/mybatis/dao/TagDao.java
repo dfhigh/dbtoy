@@ -6,8 +6,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mib.db.model.Tag;
 import org.mib.db.mybatis.mapper.TagMapper;
 import org.mib.rest.exception.ResourceNotFoundException;
-import org.mib.rest.model.ListElementRequest;
-import org.mib.rest.model.ListPayload;
+import org.mib.rest.model.list.ListElementRequest;
+import org.mib.rest.model.list.ListPayload;
 
 import java.util.Collection;
 import java.util.List;

@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mib.db.model.Tag;
 import org.mib.db.model.Version;
 import org.mib.db.mybatis.mapper.VersionTagMapper;
-import org.mib.rest.model.ListPayload;
+import org.mib.rest.model.list.ListPayload;
 
 import java.util.List;
 

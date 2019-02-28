@@ -19,27 +19,43 @@
     <select id="countOfFolders" resultType="java.lang.Long">
         select count(id) from folder
         <where>
-            <if test="params.params != null">
-                <foreach collection="params.params" open=" and " separator=" and " item="item" index="index">
-                    ${index} = #{item}
+            <if test="params.filters != null">
+                <foreach collection="params.filters" open=" and " separator=" and " item="item" index="index">
+                    `${item.field}` ${item.operator.expr} #{item.value}
                 </foreach>
             </if>
-            <if test="params.name != null">and name like concat('%', #{params.name}, '%')</if>
+            <if test="params.ins != null">
+                <foreach collection="params.ins" open=" and " separator=" and " item="item" index="index">
+                    `${index}` in
+                    <foreach collection="item" index="subIndex" item="subItem" open="(" separator="," close=")">
+                        #{subItem}
+                    </foreach>
+                </foreach>
+            </if>
         </where>
     </select>
 
     <select id="listFolders" resultMap="folderResult">
         select * from folder
         <where>
-            <if test="params.params != null">
-                <foreach collection="params.params" open=" and " separator=" and " item="item" index="index">
-                    ${index} = #{item}
+            <if test="params.filters != null">
+                <foreach collection="params.filters" open=" and " separator=" and " item="item" index="index">
+                    `${item.field}` ${item.operator.expr} #{item.value}
                 </foreach>
             </if>
-            <if test="params.name != null">and name like concat('%', #{params.name}, '%')</if>
+            <if test="params.ins != null">
+                <foreach collection="params.ins" open=" and " separator=" and " item="item" index="index">
+                    `${index}` in
+                    <foreach collection="item" index="subIndex" item="subItem" open="(" separator="," close=")">
+                        #{subItem}
+                    </foreach>
+                </foreach>
+            </if>
         </where>
-        <if test="params.orderBy != null and params.ordering != null">
-            order by ${params.orderBy} ${params.ordering}
+        <if test="params.sorters != null">
+            <foreach collection="params.sorters" open="order by" separator="," item="item" index="index">
+                `${item.field}` ${item.order.name}
+            </foreach>
         </if>
         limit #{params.limit} offset #{params.offset}
     </select>

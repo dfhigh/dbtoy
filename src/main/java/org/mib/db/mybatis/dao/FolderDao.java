@@ -1,14 +1,15 @@
 package org.mib.db.mybatis.dao;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mib.db.model.Folder;
 import org.mib.db.mybatis.mapper.FolderMapper;
 import org.mib.rest.exception.ResourceNotFoundException;
-import org.mib.rest.model.ListElementRequest;
-import org.mib.rest.model.ListPayload;
+import org.mib.rest.model.list.Filter;
+import org.mib.rest.model.list.ListElementRequest;
+import org.mib.rest.model.list.ListPayload;
 
 import java.util.Collection;
 import java.util.List;
@@ -49,8 +50,8 @@ public class FolderDao extends Dao {
         validateObjectNotNull(ler, "list config");
         validateLongNotNegative(ler.getOffset(), "list offset");
         validateLongNotNegative(ler.getLimit(), "list limit");
-        if (ler.getParams() == null) ler.setParams(Maps.newHashMapWithExpectedSize(1));
-        ler.getParams().put("project_id", projectId);
+        if (ler.getFilters() == null) ler.setFilters(Lists.newArrayListWithCapacity(1));
+        ler.getFilters().add(Filter.eq("project_id", projectId));
         try (SqlSession session = ssf.openSession()) {
             FolderMapper mapper = session.getMapper(FolderMapper.class);
             long total = mapper.countOfFolders(ler);
